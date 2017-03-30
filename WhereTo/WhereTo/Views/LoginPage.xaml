@@ -3,16 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:WhereTo.ViewModels;assembly=WhereTo.Android"
              x:Class="WhereTo.Views.LoginPage">
-    <ContentPage.BindingContext>
-        <viewModels:LoginViewModel />
-    </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource DarkerBackgroundColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout BackgroundColor="{StaticResource Primary}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
                     <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
                         <Image Source="logo.png" VerticalOptions="Center" HeightRequest="128"/>
@@ -20,18 +17,16 @@
                 </StackLayout>
             </StackLayout>
             <ScrollView Grid.Row="1">
-                <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
+                <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="6">
                     
-                    <Frame VerticalOptions="Center"  Margin="16">
-                        <StackLayout  VerticalOptions="FillAndExpand"  Margin="10">
+                    <Frame VerticalOptions="Center"  Margin="8">
+                        <StackLayout  VerticalOptions="FillAndExpand"  Margin="8">
 
-                            <Label LineBreakMode="WordWrap" FontAttributes="Bold" Scale="1.5" Margin="16" HorizontalTextAlignment="Center" Text="Please login to use WhereTo">
+                            <Label LineBreakMode="WordWrap" FontAttributes="Bold" Scale="1.5" Margin="16" HorizontalTextAlignment="Center" Text="Please login to use WhereTo"></Label>
 
-                            </Label>
-
-                            <Button Text="Login with Facebook" Margin="8" BackgroundColor="#3b5998" Command="{Binding FacebookLoginCommand}" />
-                            <Button Text="Login with G+"  Margin="8" BackgroundColor="#D34836" Command="{Binding GoogleLoginCommand}" />
-                            <Button Text="Login with Twitter" Margin="8" BackgroundColor="#00aced" IsEnabled="False" />
+                            <Button Text="Login with Facebook" HeightRequest="56" TextColor="White" BackgroundColor="#3b5998" Command="{Binding FacebookLoginCommand}" />
+                            <Button Text="Login with G+"   HeightRequest="56" TextColor="White" BackgroundColor="#D34836" Command="{Binding GoogleLoginCommand}" />
+                            <Button Text="Login with Twitter"  HeightRequest="56" TextColor="White" BackgroundColor="#00aced" IsEnabled="False" />
                         </StackLayout>
                     </Frame>
                 </StackLayout>

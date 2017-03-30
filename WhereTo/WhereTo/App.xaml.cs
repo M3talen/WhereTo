@@ -6,36 +6,38 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace WhereTo
 {
-	public partial class App : Application
-	{
+    public partial class App : Application
+    {
         public App()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
+            //TODO check auth status
+            SetLoginPage();
+        }
 
-			SetMainPage();
-		}
+        public static void SetLoginPage()
+        {
+                Current.MainPage = new NavigationPage(new LoginPage());
+        }
 
-		public static void SetMainPage()
-		{
-
-		    Current.MainPage = new LoginPage();
-            /*
-            Current.MainPage = new TabbedPage
+        public static Page GetMainPage()
+        {
+            return new TabbedPage
             {
                 Children =
                 {
-                    new NavigationPage(new ItemsPage())
-                    {
-                        Title = "Browse",
-                        Icon = Device.OnPlatform<string>("tab_feed.png",null,null)
-                    },
                     new NavigationPage(new AboutPage())
                     {
-                        Title = "About",
-                        Icon = Device.OnPlatform<string>("tab_about.png",null,null)
-                    },
+                        Title = "Event Map",
+                        Icon = Device.OnPlatform<string>("tab_about.png", null, null)
+                    },new NavigationPage(new ItemsPage())
+                    {
+                        Title = "Browse",
+                        Icon = Device.OnPlatform<string>("tab_feed.png", null, null)
+                    }
                 }
-            };*/
+            };
         }
-	}
+
+    }
 }

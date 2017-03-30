@@ -11,11 +11,15 @@
             <Color x:Key="DarkerBackgroundColor">#222222</Color>
             <Color x:Key="MediumGrayTextColor">#757575</Color>
             <Color x:Key="LightTextColor">#999999</Color>
-            
-            
+
+
             <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryDark}" />
                 <Setter Property="BarTextColor" Value="White" />
+            </Style>
+
+            <Style TargetType="TabbedPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
