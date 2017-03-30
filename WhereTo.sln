@@ -13,6 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereTo.UWP", "WhereTo\Wher
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		WhereTo\WhereTo\WhereTo.projitems*{2c611122-12e5-470a-8f33-8b6f0ad56f32}*SharedItemsImports = 4
 		WhereTo\WhereTo\WhereTo.projitems*{7f9b8b25-7010-416f-9a3d-f5594c5c5238}*SharedItemsImports = 4
 		WhereTo\WhereTo\WhereTo.projitems*{9cf62f7f-1af2-46af-a76d-8d50fe67d801}*SharedItemsImports = 13
 	EndGlobalSection

@@ -17,6 +17,9 @@ namespace WhereTo
 
 		public static void SetMainPage()
 		{
+
+		    Current.MainPage = new LoginPage();
+            /*
             Current.MainPage = new TabbedPage
             {
                 Children =
@@ -32,7 +35,7 @@ namespace WhereTo
                         Icon = Device.OnPlatform<string>("tab_about.png",null,null)
                     },
                 }
-            };
+            };*/
         }
 	}
 }

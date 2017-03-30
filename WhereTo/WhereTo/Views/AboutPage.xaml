@@ -25,7 +25,7 @@
           <Label.FormattedText>
             <FormattedString>
               <FormattedString.Spans>
-                <Span Text="WhereTo" FontAttributes="Bold" FontSize="22"/>
+                <Span Text="WhereTo App" FontAttributes="Bold" FontSize="22"/>
                 <Span Text=" "/>
                 <Span Text="1.0" ForegroundColor="{StaticResource LightTextColor}"/>
               </FormattedString.Spans>
