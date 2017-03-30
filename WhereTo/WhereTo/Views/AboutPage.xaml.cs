@@ -8,6 +8,7 @@ namespace WhereTo.Views
 		public AboutPage()
 		{
 			InitializeComponent();
-		}
+		   
+        }
 	}
 }

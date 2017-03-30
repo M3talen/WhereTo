@@ -10,6 +10,7 @@ namespace WhereTo
     {
         public App()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
             //TODO check auth status
             SetLoginPage();
