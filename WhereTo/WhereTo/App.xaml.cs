@@ -27,7 +27,7 @@ namespace WhereTo
             {
                 Children =
                 {
-                    new NavigationPage(new AboutPage())
+                    new NavigationPage(new MapPage())
                     {
                         Title = "Event Map",
                         Icon = Device.OnPlatform<string>("tab_about.png", null, null)

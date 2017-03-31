@@ -29,19 +29,33 @@ namespace WhereTo.Views
 
         public async Task LoginSuccess()
         {
-            await Navigation.PushModalAsync(App.GetMainPage());
+            if (!IsBusy)
+            {
+                try
+                {
+                    IsBusy = true;
+                    
+                    await Navigation.PushModalAsync(App.GetMainPage());
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
+            }
         }
 
-	    private  void GoogleLogin()
+	    private async void GoogleLogin()
 	    {
-	        Toast.MakeText(Forms.Context, "Hello", ToastLength.Long).Show();
-            LoginSuccess();
+            if(IsBusy) return;
+            Toast.MakeText(Forms.Context, "Hello", ToastLength.Long).Show();
+            await LoginSuccess();
 	    }
 
-	    private  void FacebookLogin()
+	    private async void FacebookLogin()
 	    {
-	        Toast.MakeText(Forms.Context, "Hello", ToastLength.Long).Show();
-             LoginSuccess();
+	        if (IsBusy) return;
+            Toast.MakeText(Forms.Context, "Hello", ToastLength.Long).Show();
+            await LoginSuccess();
         }
 
 	    public ICommand FacebookLoginCommand { get; }

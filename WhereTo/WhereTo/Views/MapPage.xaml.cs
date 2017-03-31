@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace WhereTo.Views
 {
-	public partial class AboutPage : ContentPage
+	public partial class MapPage : ContentPage
 	{
-		public AboutPage()
+		public MapPage()
 		{
 			InitializeComponent();
 		   

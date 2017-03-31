@@ -4,9 +4,9 @@ using Xamarin.Forms;
 
 namespace WhereTo.ViewModels
 {
-	public class AboutViewModel : BaseViewModel
+	public class MapViewModel : BaseViewModel
 	{
-		public AboutViewModel()
+		public MapViewModel()
 		{
 			Title = "Event Map";
 

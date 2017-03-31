@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:WhereTo.ViewModels;assembly=WhereTo.Android"
-             x:Class="WhereTo.Views.LoginPage">
+             x:Class="WhereTo.Views.LoginPage"
+             x:Name="LoginContentPage">
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource DarkerBackgroundColor}">
             <Grid.RowDefinitions>
@@ -20,10 +21,13 @@
                 <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="6">
                     
                     <Frame VerticalOptions="Center"  Margin="8">
-                        <StackLayout  VerticalOptions="FillAndExpand"  Margin="8">
+
+                        <StackLayout  VerticalOptions="FillAndExpand"  Margin="8" x:Name="StackLayoutLogin">
 
                             <Label LineBreakMode="WordWrap" FontAttributes="Bold" Scale="1.5" Margin="16" HorizontalTextAlignment="Center" Text="Please login to use WhereTo"></Label>
 
+                            <ActivityIndicator IsVisible="{Binding Source={x:Reference LoginContentPage}, Path=IsBusy}" IsRunning="{Binding Source={x:Reference LoginContentPage}, Path=IsBusy}" />
+                            
                             <Button Text="Login with Facebook" HeightRequest="56" TextColor="White" BackgroundColor="#3b5998" Command="{Binding FacebookLoginCommand}" />
                             <Button Text="Login with G+"   HeightRequest="56" TextColor="White" BackgroundColor="#D34836" Command="{Binding GoogleLoginCommand}" />
                             <Button Text="Login with Twitter"  HeightRequest="56" TextColor="White" BackgroundColor="#00aced" IsEnabled="False" />
