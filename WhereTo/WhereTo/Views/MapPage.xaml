@@ -9,19 +9,11 @@
     <vm:MapViewModel />
   </ContentPage.BindingContext>
   <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-        
-        <maps:Map Grid.Row="1" x:Name="GoogleMaps"
-                  IsShowingUser="True"
-                  
-                  MapType="Street">
+    
+      <maps:Map x:Name="GoogleMaps" 
+                IsShowingUser="True"
+                MapType="Street">
+      </maps:Map>
 
-        </maps:Map>
-      
-      
-      
     </Grid>
 </ContentPage>

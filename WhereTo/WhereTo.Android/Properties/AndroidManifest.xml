@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.linktwo.whereto" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="15" />
+	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -9,10 +9,6 @@
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<application android:label="WhereTo.Android">
-
-
-    <meta-data android:name="com.google.android.maps.v2.API_KEY"
-               android:value="AIzaSyA-nipajmZFA0jTP5Z0j9WJn5cIF9Awxz8" />
-    
-  </application>
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyA-nipajmZFA0jTP5Z0j9WJn5cIF9Awxz8" />
+	</application>
 </manifest>
