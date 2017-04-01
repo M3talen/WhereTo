@@ -18,9 +18,9 @@
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
 
-            <Style TargetType="TabbedPage">
+           <!-- <Style TargetType="TabbedPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}"/>
-            </Style>
+            </Style> -->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

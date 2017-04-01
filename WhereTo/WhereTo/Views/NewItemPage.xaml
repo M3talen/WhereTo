@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="WhereTo.Views.NewItemPage"
-		Title="New Item">
-	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Save" Clicked="Save_Clicked" />
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-		<StackLayout Spacing="20" Padding="15">
-			<Label Text="Text" FontSize="Medium" />
-			<Entry Text="{Binding Item.Text}" FontSize="Small" />
-			<Label Text="Description" FontSize="Medium" />
-			<Editor Text="{Binding Item.Description}" FontSize="Small" Margin="0" />
-		</StackLayout>
-	</ContentPage.Content>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="WhereTo.Views.NewItemPage"
+             xmlns:NControls="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+             Title="New Item">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Spacing="16" Padding="15">
+            <NControls:FloatingLabelControl Placeholder="Event name" Text="{Binding _event.EventName}" />
+
+            <NControls:FloatingLabelControl Placeholder="Cathegory" Text="{Binding _event.Cathegory}" />
+
+            <NControls:FloatingLabelControl Placeholder="Location" Text="{Binding _event.Location}" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <NControls:FloatingLabelControl Placeholder="Start date" Text="{Binding _event.StartDate, StringFormat='{}{0:dd/MM/yyyy}'}"  Grid.Row="0" Grid.Column="0" />
+                <NControls:FloatingLabelControl Placeholder="Time" Text="{Binding _event.StartTime}" Grid.Row="0" Grid.Column="1" />
+                <NControls:FloatingLabelControl Placeholder="End date" Text="{Binding _event.EndDate,  StringFormat='{}{0:dd/MM/yyyy}'}"  Grid.Row="1" Grid.Column="0"/>
+                <NControls:FloatingLabelControl Placeholder="Time" Text="{Binding _event.EndTime}"  Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+            <NControls:FloatingLabelControl Placeholder="Description" Text="{Binding _event.Description}" />
+
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

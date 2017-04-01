@@ -4,16 +4,26 @@
              x:Class="WhereTo.Views.MapPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
              xmlns:vm="clr-namespace:WhereTo.ViewModels;"
+             xmlns:NControls="clr-namespace:NControl.Controls;assembly=NControl.Controls"
              Title="{Binding Title}">
-  <ContentPage.BindingContext>
-    <vm:MapViewModel />
-  </ContentPage.BindingContext>
-  <Grid>
-    
-      <maps:Map x:Name="GoogleMaps" 
-                IsShowingUser="True"
-                MapType="Street">
-      </maps:Map>
+    <ContentPage.BindingContext>
+        <vm:MapViewModel />
+    </ContentPage.BindingContext>
 
-    </Grid>
+    <ContentPage.Content>
+        <RelativeLayout>
+            <ContentView
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+                <maps:Map x:Name="GoogleMaps" 
+                          IsShowingUser="True"
+                          MapType="Street">
+                </maps:Map>
+            </ContentView>
+            <NControls:ActionButton ButtonColor="{StaticResource Accent}" ButtonIcon="Add"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-75}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-75}" />
+        </RelativeLayout>
+    </ContentPage.Content>
+    
 </ContentPage>

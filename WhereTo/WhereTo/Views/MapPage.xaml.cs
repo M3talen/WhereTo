@@ -69,13 +69,13 @@ namespace WhereTo.Views
                 var circle = new Circle();
                 circle.Center = center;
                 circle.Radius = Distance.FromMeters(2000f);
-                circle.StrokeColor = Color.Orange;
+                circle.StrokeColor = (Color) Application.Current.Resources["PrimaryDark"];
                 circle.StrokeWidth = 3f;
-                circle.FillColor = Color.FromRgba(0, 0, 255, 32);
+                circle.FillColor = Color.FromRgba(255, 152, 0, 32);
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
                 {
                     GoogleMaps.Circles.Add(circle);
-                    GoogleMaps.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(6000)), false);
+                    GoogleMaps.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(3000)), false);
                 });
                 Console.WriteLine("Getting location 7");
             }
