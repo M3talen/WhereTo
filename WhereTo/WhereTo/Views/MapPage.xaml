@@ -20,7 +20,7 @@
                           MapType="Street">
                 </maps:Map>
             </ContentView>
-            <NControls:ActionButton ButtonColor="{StaticResource Accent}" ButtonIcon="Add"
+            <NControls:ActionButton ButtonColor="{StaticResource Accent}" x:Name="FABAdd" HeightRequest="64" WidthRequest="64"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-75}"
                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-75}" />
         </RelativeLayout>

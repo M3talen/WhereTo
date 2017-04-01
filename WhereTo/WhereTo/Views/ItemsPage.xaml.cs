@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Rg.Plugins.Popup.Extensions;
 using WhereTo.Models;
 using WhereTo.ViewModels;
 
@@ -20,7 +20,7 @@ namespace WhereTo.Views
 
 		async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
 		{
-			var item = args.SelectedItem as Item;
+			var item = args.SelectedItem as Event;
 			if (item == null)
 				return;
 
@@ -32,14 +32,14 @@ namespace WhereTo.Views
 
 		async void AddItem_Clicked(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new NewItemPage());
+		    await Navigation.PushPopupAsync(new NewItemPage());
 		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 
-			if (viewModel.Items.Count == 0)
+			if (viewModel.Events.Count == 0)
 				viewModel.LoadItemsCommand.Execute(null);
 		}
 	}

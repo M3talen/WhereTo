@@ -39,7 +39,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ItemsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\MockDataStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IDataStore.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Item.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableRangeCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\MessengingCenterAlert.cs" />

@@ -1,36 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="WhereTo.Views.NewItemPage"
              xmlns:NControls="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
              Title="New Item">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
-    </ContentPage.ToolbarItems>
-    <ContentPage.Content>
-        <StackLayout Spacing="16" Padding="15">
-            <NControls:FloatingLabelControl Placeholder="Event name" Text="{Binding _event.EventName}" />
+    <!--Animations use example-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
 
-            <NControls:FloatingLabelControl Placeholder="Cathegory" Text="{Binding _event.Cathegory}" />
+    <ContentPage.Content >
+        <StackLayout VerticalOptions="Center" BackgroundColor="White" HorizontalOptions="Center" Padding="0" Margin="0">
+            <Frame Margin="0" Padding="5" >
+                <Frame.Content>
+                    <StackLayout Padding="15" Spacing="16" Margin="2" BackgroundColor="White" Orientation="Vertical">
 
-            <NControls:FloatingLabelControl Placeholder="Location" Text="{Binding _event.Location}" />
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                        <NControls:FloatingLabelControl Placeholder="Event name" Text="{Binding _event.EventName, Mode=TwoWay}" />
 
-                <NControls:FloatingLabelControl Placeholder="Start date" Text="{Binding _event.StartDate, StringFormat='{}{0:dd/MM/yyyy}'}"  Grid.Row="0" Grid.Column="0" />
-                <NControls:FloatingLabelControl Placeholder="Time" Text="{Binding _event.StartTime}" Grid.Row="0" Grid.Column="1" />
-                <NControls:FloatingLabelControl Placeholder="End date" Text="{Binding _event.EndDate,  StringFormat='{}{0:dd/MM/yyyy}'}"  Grid.Row="1" Grid.Column="0"/>
-                <NControls:FloatingLabelControl Placeholder="Time" Text="{Binding _event.EndTime}"  Grid.Row="1" Grid.Column="1"/>
-            </Grid>
-            <NControls:FloatingLabelControl Placeholder="Description" Text="{Binding _event.Description}" />
+                        <NControls:FloatingLabelControl Placeholder="Cathegory" Text="{Binding _event.Cathegory, Mode=TwoWay}" />
 
+                        <NControls:FloatingLabelControl x:Name="LocationPicker" Focused="LocationPicker_OnFocused" Placeholder="Location" Text="{Binding _event.Location, Mode=TwoWay}" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <NControls:FloatingLabelControl Placeholder="Start date" x:Name="StartDatePicker" Text="{Binding _event.StartDate, Mode=TwoWay, StringFormat='{}{0:dd/MM/yyyy}'}" Focused="StartDate_OnFocused" Grid.Row="0" Grid.Column="0" />
+                            <NControls:FloatingLabelControl Placeholder="Time" x:Name="StartTimePicker" Text="{Binding _event.StartTime, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Focused="StartTime_OnFocused"/>
+                            <NControls:FloatingLabelControl Placeholder="End date" x:Name="EndDatePicker" Text="{Binding _event.EndDate, Mode=TwoWay,  StringFormat='{}{0:dd/MM/yyyy}'}" Focused="EndDate_OnFocused" Grid.Row="1" Grid.Column="0"/>
+                            <NControls:FloatingLabelControl Placeholder="Time" x:Name="EndTimePicker" Text="{Binding _event.EndTime, Mode=TwoWay}" Focused="EndTime_OnFocused" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                        <NControls:FloatingLabelControl Placeholder="Description" Text="{Binding _event.Description, Mode=TwoWay}" />
+
+                        <Button Text="Add" Command="{Binding AddItemCommand}"></Button>
+
+
+                    </StackLayout>
+                </Frame.Content>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</pages:PopupPage>

@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 
@@ -16,6 +17,7 @@ namespace WhereTo.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsGoogleMaps.Init(this, bundle);
+            UserDialogs.Init(this);
             LoadApplication(new App());
         }
     }

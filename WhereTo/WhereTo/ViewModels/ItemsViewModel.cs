@@ -10,52 +10,52 @@ using Xamarin.Forms;
 
 namespace WhereTo.ViewModels
 {
-	public class ItemsViewModel : BaseViewModel
-	{
-		public ObservableRangeCollection<Item> Items { get; set; }
-		public Command LoadItemsCommand { get; set; }
+    public class ItemsViewModel : BaseViewModel
+    {
+        public ObservableRangeCollection<Event> Events { get; set; }
+        public Command LoadItemsCommand { get; set; }
 
-		public ItemsViewModel()
-		{
-			Title = "Browse";
-			Items = new ObservableRangeCollection<Item>();
-			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+        public ItemsViewModel()
+        {
+            Title = "Browse";
+            Events = new ObservableRangeCollection<Event>();
+            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-			MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-			{
-				var _item = item as Item;
-				Items.Add(_item);
-				await DataStore.AddItemAsync(_item);
-			});
-		}
+            MessagingCenter.Subscribe<NewItemPage, Event>(this, "AddItem", async (obj, item) =>
+            {
+                var _item = item as Event;
+                Events.Add(_item);
+                await DataStore.AddItemAsync(_item);
+            });
+        }
 
-		async Task ExecuteLoadItemsCommand()
-		{
-			if (IsBusy)
-				return;
+        async Task ExecuteLoadItemsCommand()
+        {
+            if (IsBusy)
+                return;
 
-			IsBusy = true;
+            IsBusy = true;
 
-			try
-			{
-				Items.Clear();
-				var items = await DataStore.GetItemsAsync(true);
-				Items.ReplaceRange(items);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				MessagingCenter.Send(new MessagingCenterAlert
-				{
-					Title = "Error",
-					Message = "Unable to load items.",
-					Cancel = "OK"
-				}, "message");
-			}
-			finally
-			{
-				IsBusy = false;
-			}
-		}
-	}
+            try
+            {
+                Events.Clear();
+                var items = await DataStore.GetItemsAsync(true);
+                Events.ReplaceRange(items);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                MessagingCenter.Send(new MessagingCenterAlert
+                {
+                    Title = "Error",
+                    Message = "Unable to load items.",
+                    Cancel = "OK"
+                }, "message");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+    }
 }
