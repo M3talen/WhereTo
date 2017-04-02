@@ -9,18 +9,20 @@
     <ContentPage.BindingContext>
         <vm:MapViewModel />
     </ContentPage.BindingContext>
-
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add event" Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <RelativeLayout>
             <ContentView
                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
                 RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
-                <maps:Map x:Name="GoogleMaps" 
+                <maps:Map x:Name="GoogleMaps"
                           IsShowingUser="True"
                           MapType="Street">
                 </maps:Map>
             </ContentView>
-            <NControls:ActionButton ButtonColor="{StaticResource Accent}" x:Name="FABAdd" HeightRequest="64" WidthRequest="64"
+            <ActivityIndicator x:Name="ActivityIndicator" Color="{StaticResource Accent}" IsVisible="true" IsRunning="true" HeightRequest="64" WidthRequest="64"
                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-75}"
                 RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-75}" />
         </RelativeLayout>

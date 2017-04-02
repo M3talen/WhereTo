@@ -5,6 +5,7 @@ using Android.Gms.Maps;
 using Android.Widget;
 using NControl.Controls;
 using Plugin.Geolocator;
+using Rg.Plugins.Popup.Extensions;
 using WhereTo.ViewModels;
 using Xamarin;
 using Xamarin.Forms;
@@ -22,8 +23,7 @@ namespace WhereTo.Views
             InitializeComponent();
 
             BindingContext = _viewModel = new MapViewModel();
-
-            FABAdd.ButtonIcon = FontAwesomeLabel.FAPlus;
+            
 
             Task.Run(async () =>
             {
@@ -48,7 +48,7 @@ namespace WhereTo.Views
         }
 
         private async Task GetUserPositionAsync()
-        {
+        { 
             try
             {
                 var locator = CrossGeolocator.Current;
@@ -71,14 +71,23 @@ namespace WhereTo.Views
                 };
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
                 {
+                    ActivityIndicator.IsRunning = false;
+                    ActivityIndicator.IsVisible = false;
                     GoogleMaps.Circles.Add(circle);
-                    GoogleMaps.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(1500)), false);
+                    GoogleMaps.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(1500)));
+                    Application.Current.Properties["lat"] = position.Latitude;
+                    Application.Current.Properties["long"] = position.Longitude;
                 });
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private async void AddItem_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushPopupAsync(new NewItemPage());
         }
     }
 }

@@ -1,11 +1,15 @@
 ﻿
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Acr.UserDialogs;
 using Android.Support.Design.Widget;
+using NControl.Controls;
 using Rg.Plugins.Popup.Pages;
 using WhereTo.ViewModels;
 
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using Xfx;
 
 namespace WhereTo.Views
 {
@@ -19,6 +23,9 @@ namespace WhereTo.Views
             InitializeComponent();
         }
 
+
+        public ICommand JoinEvent { get; }
+
         public ItemDetailPage(ItemDetailViewModel viewModel)
 		{
 			InitializeComponent();
@@ -29,7 +36,12 @@ namespace WhereTo.Views
 		    var pin = new Pin() { Label = viewModel.Item.EventName, Position = viewModel.Item.EventLocation };
 		    GoogleMapsPreview?.Pins.Add(pin);
 
-		}
+		    JoinEvent= new Command(() =>
+		    {
+		        UserDialogs.Instance.Alert("Server request - null");
+		    });
+
+        }
 
         protected new virtual Task OnAppearingAnimationEnd()
         {
@@ -41,5 +53,9 @@ namespace WhereTo.Views
             return Content.FadeTo(1); ;
         }
 
+        private void VisualElement_OnFocused(object sender, FocusEventArgs e)
+        {
+            (sender as FloatingLabelControl)?.Unfocus();
+        }
     }
 }

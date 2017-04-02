@@ -55,6 +55,21 @@ namespace WhereTo.Views
 
         private async Task GetUserPositionAsync()
         {
+            if (Application.Current.Properties.ContainsKey("lat"))
+            {
+                var lat = Application.Current.Properties["lat"] as double?;
+                var longi = Application.Current.Properties["long"] as double?;
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                {
+                    Position pos = new Position();
+                    if (lat != null) if (longi != null)
+                            pos = new Position(lat.Value, longi.Value);
+                    PinPosition.Position = pos;
+                    GoogleMapsPicker.Pins.Add(PinPosition);
+                    GoogleMapsPicker.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(1000)), true);
+                });
+
+            }
             try
             {
                 var locator = CrossGeolocator.Current;
