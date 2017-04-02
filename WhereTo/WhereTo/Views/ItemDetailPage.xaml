@@ -1,10 +1,67 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WhereTo.Views.ItemDetailPage"
-             Title="{Binding Title}">
-	<StackLayout Spacing="20" Padding="15">
-		<Label Text="{Binding Item.Text}" FontSize="Medium"/>
-        <Label Text="{Binding Item.Description}" FontSize="Small"/>
-    </StackLayout>
-</ContentPage>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:NControls="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+                 xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+                 xmlns:xfx="clr-namespace:Xfx;assembly=Xfx.Controls"
+                 x:Class="WhereTo.Views.ItemDetailPage"
+                 Title="{Binding Title}">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <ContentPage.Content >
+
+        <Frame  Margin="8" VerticalOptions="Center" BackgroundColor="White" HorizontalOptions="Center" >
+            <Frame.Content>
+                <StackLayout  Spacing="0" BackgroundColor="White" Orientation="Vertical">
+ 
+                    <maps:Map Grid.Row="0"  x:Name="GoogleMapsPreview" WidthRequest="1200" HeightRequest="200" HasZoomEnabled="False" HasRotationEnabled="False" HasScrollEnabled="False"
+                              HorizontalOptions="Center"  VerticalOptions="Fill" IsShowingUser="True" 
+                              MapType="Street"/>
+
+
+                    <xfx:XfxEntry IsEnabled="true"  Placeholder="Event name" Text="{Binding Item.EventName}" />
+
+                    <xfx:XfxEntry IsEnabled="true"  Placeholder="Description" Text="{Binding Item.Description}" />
+
+                    <xfx:XfxEntry IsEnabled="False"  Placeholder="Cathegory" Text="{Binding Item.Cathegory}" />
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <xfx:XfxEntry IsEnabled="False"  Placeholder="Start date" x:Name="StartDatePicker" 
+                          Text="{Binding Item.StartDate, StringFormat='{}{0:dd/MM/yyyy}'}"  Grid.Row="0" Grid.Column="0" />
+                        <xfx:XfxEntry IsEnabled="False"  Placeholder="Time" x:Name="StartTimePicker" 
+                          Text="{Binding Item.StartTime, StringFormat='{}{0:hh\\:mm}'}" Grid.Row="0" Grid.Column="1"/>
+                        <xfx:XfxEntry IsEnabled="False"  Placeholder="End date" x:Name="EndDatePicker" 
+                          Text="{Binding Item.EndDate,  StringFormat='{}{0:dd/MM/yyyy}'}"  Grid.Row="1" Grid.Column="0"/>
+                        <xfx:XfxEntry IsEnabled="False"  Placeholder="Time" x:Name="EndTimePicker" 
+                                                        Text="{Binding Item.EndTime, StringFormat='{}{0:hh\\:mm}'}" Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+
+                </StackLayout>
+
+
+            </Frame.Content>
+        </Frame>
+    </ContentPage.Content>
+</pages:PopupPage>

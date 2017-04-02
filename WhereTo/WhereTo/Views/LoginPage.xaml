@@ -29,9 +29,9 @@
                             <Label LineBreakMode="WordWrap" FontAttributes="Bold" Scale="1.5" Margin="16" HorizontalTextAlignment="Center" Text="Please login to use WhereTo"></Label>
 
                             <ActivityIndicator IsVisible="{Binding Source={x:Reference LoginContentPage}, Path=IsBusy}" IsRunning="{Binding Source={x:Reference LoginContentPage}, Path=IsBusy}" />
-                            <Button Text="Login with Facebook" HeightRequest="56" TextColor="White" BackgroundColor="#3b5998" Command="{Binding FacebookLoginCommand}" />
-                            <Button Text="Login with G+"   HeightRequest="56" TextColor="White" BackgroundColor="#D34836" Command="{Binding GoogleLoginCommand}" />
-                            <Button Text="Login with Twitter"  HeightRequest="56" TextColor="White" BackgroundColor="#00aced" IsEnabled="False" />
+                            <Button Text="Login with Facebook" HeightRequest="48" Margin="4"  TextColor="White" BackgroundColor="#3b5998" Command="{Binding FacebookLoginCommand}" />
+                            <Button Text="Login with G+"   HeightRequest="48" Margin="4" TextColor="White" BackgroundColor="#D34836" Command="{Binding GoogleLoginCommand}" />
+                            <Button Text="Login with Twitter"  HeightRequest="48" Margin="4" TextColor="White" BackgroundColor="#00aced" IsEnabled="False" />
                         </StackLayout>
                     </Frame>
                 </StackLayout>

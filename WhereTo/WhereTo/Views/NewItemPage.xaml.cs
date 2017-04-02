@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -7,11 +8,13 @@ using Acr.UserDialogs;
 using Android.Widget;
 using NControl.Controls;
 using NControl.Controls.Droid;
+using Plugin.Geolocator;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using WhereTo.Models;
 
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;
 using Point = NGraphics.Point;
 
@@ -20,7 +23,7 @@ namespace WhereTo.Views
     public partial class NewItemPage : PopupPage
     {
         public Event _event { get; set; }
-
+        public Pin PinPosition { get; set; }
         public NewItemPage()
         {
             InitializeComponent();
@@ -34,11 +37,57 @@ namespace WhereTo.Views
                 EndDate = DateTime.Now,
                 EndTime = DateTime.Now.TimeOfDay
             };
+
+            PinPosition = new Pin() { Label = _event.EventName};
+
             AddItemCommand = new Command(AddItem);
+
+            Task.Run(async () =>
+            {
+                await GetUserPositionAsync();
+            });
+
+            GoogleMapsPicker.Padding = new Thickness(0, 0, 0, 0);
+            
             BindingContext = this;
 
         }
 
+        private async Task GetUserPositionAsync()
+        {
+            try
+            {
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 50;
+
+                var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
+                if (position == null)
+                    return;
+
+                var center = new Position(position.Latitude, position.Longitude);
+
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                {
+                    PinPosition.Position = new Position(position.Latitude,position.Longitude);
+                    GoogleMapsPicker.Pins.Add(PinPosition);
+                    GoogleMapsPicker.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(1000)), false);
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+       
+        private void GoogleMapsPreview_OnCameraChanged(object sender, CameraChangedEventArgs e)
+        {
+            if (GoogleMapsPicker.Pins.Count <= 0) return;
+            if (e?.Position != null)
+            {
+                GoogleMapsPicker.Pins.First().Position = e.Position.Target;
+                _event.EventLocation = e.Position.Target;
+            }
+        }
 
         public Command AddItemCommand { get; set; }
         // Method for animation child in PopupPage
@@ -91,7 +140,7 @@ namespace WhereTo.Views
         {
             if (!result.Ok) return;
             _event.StartDate = result.SelectedDate;
-            StartDatePicker.Text = _event.StartDate.ToString("d")
+            StartDatePicker.Text = _event.StartDate.ToString("d");
         }
         private void SetEndDate(DatePromptResult result)
         {
@@ -112,10 +161,19 @@ namespace WhereTo.Views
             EndTimePicker.Text = _event.EndTime.ToString();
         }
 
-        private void LocationPicker_OnFocused(object sender, FocusEventArgs e)
+        private async void Cathegory_OnFocus(object sender, FocusEventArgs e)
         {
             (sender as FloatingLabelControl)?.Unfocus();
 
+            var action = await DisplayActionSheet("Cathegory", "Cancel", null, "Drink", "Food", "Sport");
+            try
+            {
+                Enum.Parse(typeof(EventCathegory), action);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
             
         }
     }

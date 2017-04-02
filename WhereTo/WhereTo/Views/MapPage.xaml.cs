@@ -59,14 +59,16 @@ namespace WhereTo.Views
                     return;
                 
                 var center = new Position(position.Latitude, position.Longitude);
-                
-           
-                var circle = new Circle();
-                circle.Center = center;
-                circle.Radius = Distance.FromMeters(1250f);
-                circle.StrokeColor = (Color) Application.Current.Resources["PrimaryDark"];
-                circle.StrokeWidth = 3f;
-                circle.FillColor = Color.FromRgba(255, 152, 0, 32);
+
+
+                var circle = new Circle
+                {
+                    Center = center,
+                    Radius = Distance.FromMeters(1250f),
+                    StrokeColor = (Color) Application.Current.Resources["PrimaryDark"],
+                    StrokeWidth = 3f,
+                    FillColor = Color.FromRgba(255, 152, 0, 32)
+                };
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
                 {
                     GoogleMaps.Circles.Add(circle);

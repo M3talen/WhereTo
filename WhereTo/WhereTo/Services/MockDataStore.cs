@@ -71,7 +71,7 @@ namespace WhereTo.Services
             return Task.FromResult(true);
         }
 
-        public async Task InitializeAsync()
+        public async Task  InitializeAsync()
         {
             if (isInitialized)
                 return;
