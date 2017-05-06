@@ -8,6 +8,7 @@ using WhereTo.Models;
 
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using System.Text;
 
 [assembly: Dependency(typeof(WhereTo.Services.MockDataStore))]
 namespace WhereTo.Services
@@ -20,8 +21,12 @@ namespace WhereTo.Services
         public async Task<bool> AddItemAsync(Event item)
         {
             await InitializeAsync();
-
-            items.Add(item);
+            var _httpClient = new HttpClient();
+            //items.Add(item);
+            var data = JsonConvert.SerializeObject(item);
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("http://wheretoservice.azurewebsites.net/api/values", content);
+            var result = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
 
             return await Task.FromResult(true);
         }
