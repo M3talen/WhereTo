@@ -31,6 +31,13 @@ namespace WhereTo.Views
             });
             
             GoogleMaps.Padding = new Thickness(0, 0, 0, 0);
+/*
+            locator.PositionChanged += (sender, e) => {
+                var position = e.Position;
+
+                latitudeLabel.Text = position.Latitude;
+                longitudeLabel.Text = position.Longitude;
+            };*/
         }
 
         protected override void OnAppearing()

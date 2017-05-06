@@ -19,16 +19,27 @@ namespace WhereTo.Models
         public Event()
         {
         }
-
+        
         private string _eventName = string.Empty;
         private EventCathegory _cathegory;
         private DateTime _startDateTime = DateTime.Now;
         private DateTime _endtDateTime = DateTime.Now;
         private string _description = string.Empty;
         private ImageSource _icon = string.Empty;
+        private double _longitude;
+        private double _latitude;
 
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
+        public double Longitude
+        {
+            get { return _longitude; }
+            set { _longitude = value; }
+        }
+
+        public double Latitude
+        {
+            get { return _latitude; }
+            set { _latitude = value; }
+        }
 
         public EventCathegory Cathegory
         {
@@ -83,6 +94,7 @@ namespace WhereTo.Models
                 return _icon;
             }
         }
+        
 
 
         public override bool Equals(object obj)

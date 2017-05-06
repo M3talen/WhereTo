@@ -9,6 +9,7 @@ using WhereTo.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using System.Text;
+using Android.Util;
 
 [assembly: Dependency(typeof(WhereTo.Services.MockDataStore))]
 namespace WhereTo.Services
@@ -177,8 +178,9 @@ namespace WhereTo.Services
         {
             var httpClient = new HttpClient();
             var json = await httpClient.GetStringAsync("http://wheretoservice.azurewebsites.net/api/values");
-            var events = JsonConvert.DeserializeObject<List<Event>>(json);
-            return events;
+            Log.Error("json",json);
+            var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
+            return events.ToList();
         }
     }
 }
