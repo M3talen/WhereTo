@@ -22,13 +22,13 @@ namespace WhereTo.Models
 
         private string _eventName = string.Empty;
         private EventCathegory _cathegory;
-        private Position _eventLocation = new Position();
-        private double _longitude;
-        private double _latitude;
         private DateTime _startDateTime = DateTime.Now;
         private DateTime _endtDateTime = DateTime.Now;
         private string _description = string.Empty;
         private ImageSource _icon = string.Empty;
+
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
 
         public EventCathegory Cathegory
         {
@@ -40,11 +40,7 @@ namespace WhereTo.Models
             get => _eventName;
             set => SetProperty(ref _eventName, value);
         }
-        public Position EventLocation
-        {
-            get => _eventLocation;
-            set => SetProperty(ref _eventLocation, value);
-        }
+       
         public string Description
         {
             get => _description;
@@ -91,17 +87,17 @@ namespace WhereTo.Models
 
         public override bool Equals(object obj)
         {
-            return EventName.Equals((obj as Event)?.EventName) && EventLocation.Equals((obj as Event)?.EventLocation);
+            return EventName.Equals((obj as Event)?.EventName) && Longitude == ((obj as Event)?.Longitude) && Latitude == ((obj as Event)?.Latitude);
         }
 
         public override int GetHashCode()
         {
-            return EventName.GetHashCode() + EventLocation.GetHashCode();
+            return EventName.GetHashCode() + Latitude.GetHashCode() + Longitude.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"Event : {EventName} at {EventLocation.ToString()} - {Description}";
+            return $"Event : {EventName} at {Longitude.ToString()} - {Description}";
         }
     }
 }

@@ -42,7 +42,8 @@ namespace WhereTo.Views
 
             foreach (var tEvent in _viewModel.Events)
             {
-                var pin = new Pin() {Label = tEvent.EventName, Position = tEvent.EventLocation};
+                Position EventLocation = new Position(tEvent.Latitude,tEvent.Longitude);
+                var pin = new Pin() {Label = tEvent.EventName, Position = EventLocation};
                 GoogleMaps.Pins.Add(pin);
             }
         }

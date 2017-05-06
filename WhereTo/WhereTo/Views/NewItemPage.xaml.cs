@@ -100,7 +100,10 @@ namespace WhereTo.Views
             if (e?.Position != null)
             {
                 GoogleMapsPicker.Pins.First().Position = e.Position.Target;
-                _event.EventLocation = e.Position.Target;
+                //Position EventLocation = new Position(_event.Latitude,_event.Longitude);
+                //EventLocation = e.Position.Target;
+                _event.Longitude = e.Position.Target.Longitude;
+                _event.Latitude = e.Position.Target.Latitude;
             }
         }
 

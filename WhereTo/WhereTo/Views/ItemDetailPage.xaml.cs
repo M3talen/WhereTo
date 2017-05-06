@@ -31,9 +31,9 @@ namespace WhereTo.Views
 			InitializeComponent();
             
             BindingContext = this.viewModel = viewModel;
-
-		    GoogleMapsPreview?.MoveToRegion(MapSpan.FromCenterAndRadius(viewModel.Item.EventLocation, Distance.FromMeters(1000)), false);
-		    var pin = new Pin() { Label = viewModel.Item.EventName, Position = viewModel.Item.EventLocation };
+            Position EventLocation = new Position(viewModel.Item.Latitude, viewModel.Item.Longitude);
+		    GoogleMapsPreview?.MoveToRegion(MapSpan.FromCenterAndRadius(EventLocation, Distance.FromMeters(1000)), false);
+		    var pin = new Pin() { Label = viewModel.Item.EventName, Position = EventLocation };
 		    GoogleMapsPreview?.Pins.Add(pin);
 
 		    JoinEvent= new Command(() =>
