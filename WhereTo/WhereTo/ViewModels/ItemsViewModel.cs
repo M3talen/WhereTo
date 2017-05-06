@@ -39,7 +39,7 @@ namespace WhereTo.ViewModels
             try
             {
                 Events.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await DataStore.GetItemsAsync();
                 Events.ReplaceRange(items);
             }
             catch (Exception ex)

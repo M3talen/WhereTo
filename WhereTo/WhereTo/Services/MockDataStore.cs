@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 using WhereTo.Models;
 
 using Xamarin.Forms;
@@ -53,6 +54,13 @@ namespace WhereTo.Services
             return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
         }
 
+        public async Task<Event> GetItemAsync()
+        {
+            await InitializeAsync();
+
+            return await Task.FromResult(items.FirstOrDefault());
+        }
+
         public async Task<IEnumerable<Event>> GetItemsAsync(bool forceRefresh = false)
         {
             await InitializeAsync();
@@ -77,7 +85,7 @@ namespace WhereTo.Services
                 return;
 
             items = new List<Event>();
-            var _items = new List<Event>
+            /*var _items = new List<Event>
             {
                 new Event
                 {
@@ -147,14 +155,24 @@ namespace WhereTo.Services
                     EndTime = new TimeSpan(23,0,0),
                     EventLocation = new Position(45.809362249487,15.976207852364)
                 },
-            };
+            };*/
 
+            var _items = await  GetAsync();
+           
             foreach (Event item in _items)
             {
                 items.Add(item);
             }
 
             isInitialized = true;
+        }
+
+        public async Task<List<Event>> GetAsync()
+        {
+            var httpClient = new HttpClient();
+            var json = await httpClient.GetStringAsync("http://wheretoservice.azurewebsites.net/api/values");
+            var events = JsonConvert.DeserializeObject<List<Event>>(json);
+            return events;
         }
     }
 }

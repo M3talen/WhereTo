@@ -23,6 +23,8 @@ namespace WhereTo.Models
         private string _eventName = string.Empty;
         private EventCathegory _cathegory;
         private Position _eventLocation = new Position();
+        private double _longitude;
+        private double _latitude;
         private DateTime _startDateTime = DateTime.Now;
         private DateTime _endtDateTime = DateTime.Now;
         private string _description = string.Empty;
