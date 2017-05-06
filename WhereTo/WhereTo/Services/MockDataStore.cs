@@ -20,15 +20,16 @@ namespace WhereTo.Services
 
         public async Task<bool> AddItemAsync(Event item)
         {
-            await InitializeAsync();
-            var _httpClient = new HttpClient();
-            //items.Add(item);
-            var data = JsonConvert.SerializeObject(item);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("http://wheretoservice.azurewebsites.net/api/values", content);
-            var result = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
+            /* await InitializeAsync();
+             var _httpClient = new HttpClient();
+             //items.Add(item);
+             var data = JsonConvert.SerializeObject(item);
+             var content = new StringContent(data, Encoding.UTF8, "application/json");
+             var response = await _httpClient.PostAsync("http://wheretoservice.azurewebsites.net/api/values", content);
+             var result = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
 
-            return await Task.FromResult(true);
+             return await Task.FromResult(true);*/
+            return false;
         }
 
         public async Task<bool> UpdateItemAsync(Event item)
@@ -68,8 +69,15 @@ namespace WhereTo.Services
 
         public async Task<IEnumerable<Event>> GetItemsAsync(bool forceRefresh = false)
         {
-            await InitializeAsync();
+            //await InitializeAsync();
 
+            var _items = await GetAsync();
+
+            foreach (Event item in _items)
+            {
+                items.Add(item);
+            }
+            
             return await Task.FromResult(items);
         }
 
@@ -162,14 +170,7 @@ namespace WhereTo.Services
                 },
             };*/
 
-            var _items = await  GetAsync();
            
-            foreach (Event item in _items)
-            {
-                items.Add(item);
-            }
-
-            isInitialized = true;
         }
 
         public async Task<List<Event>> GetAsync()

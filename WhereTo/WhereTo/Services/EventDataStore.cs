@@ -16,7 +16,7 @@ namespace WhereTo.Services
         {
             var data = JsonConvert.SerializeObject(item);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("http://localhost:5000/api/todo/item", content);
+            var response = await _httpClient.PostAsync("http://wheretoservice.azurewebsites.net/api/values", content);
             var result = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
             return result == 1 ? true:false;
         }
