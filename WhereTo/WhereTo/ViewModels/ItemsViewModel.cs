@@ -20,13 +20,7 @@ namespace WhereTo.ViewModels
             Title = "Browse";
             Events = new ObservableRangeCollection<Event>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
-            MessagingCenter.Subscribe<NewItemPage, Event>(this, "AddItem", async (obj, item) =>
-            {
-                var _item = item as Event;
-                Events.Add(_item);
-                await DataStore.AddItemAsync(_item);
-            });
+            
         }
 
         async Task ExecuteLoadItemsCommand()

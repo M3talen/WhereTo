@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereTo.Helpers;
@@ -40,7 +41,7 @@ namespace WhereTo.ViewModels
 	        {
 	            Events.Clear();
 	            var items = await DataStore.GetItemsAsync(true);
-	            Events.ReplaceRange(items);
+	            Events.ReplaceRange(items.Distinct());
 	        }
 	        catch (Exception ex)
 	        {

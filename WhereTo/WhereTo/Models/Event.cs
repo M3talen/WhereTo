@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FFImageLoading.Work;
+using Newtonsoft.Json;
 using Xamarin.Forms.GoogleMaps;
 using ImageSource = Xamarin.Forms.ImageSource;
 
@@ -25,6 +26,8 @@ namespace WhereTo.Models
         private DateTime _startDateTime = DateTime.Now;
         private DateTime _endtDateTime = DateTime.Now;
         private string _description = string.Empty;
+
+        [JsonIgnore]
         private ImageSource _icon = string.Empty;
         private double _longitude;
         private double _latitude;
@@ -78,6 +81,7 @@ namespace WhereTo.Models
             set => _endtDateTime = new DateTime(value.Year, value.Month, value.Day, _startDateTime.Hour, _startDateTime.Minute, _startDateTime.Second);
         }
 
+        [JsonIgnore]
         public ImageSource Icon
         {
             get

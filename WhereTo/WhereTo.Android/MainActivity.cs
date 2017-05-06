@@ -26,7 +26,9 @@ namespace WhereTo.Droid
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            Console.WriteLine("----EERRROORR---------");
             Console.WriteLine(e.ExceptionObject.ToString());
+            Console.WriteLine("----ERROR END---------");
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

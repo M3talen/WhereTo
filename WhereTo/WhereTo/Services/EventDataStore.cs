@@ -1,41 +1,75 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Android.Util;
 using WhereTo.Models;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(WhereTo.Services.EventDataStore))]
 namespace WhereTo.Services
 {
     class EventDataStore : IDataStore<Event>
     {
         private HttpClient _httpClient = new HttpClient();
 
+        bool isInitialized;
+        List<Event> items = new List<Event>();
+
         public async Task<bool> AddItemAsync(Event item)
         {
             var data = JsonConvert.SerializeObject(item);
-            var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("http://wheretoservice.azurewebsites.net/api/values", content);
-            var result = JsonConvert.DeserializeObject<int>(response.Content.ReadAsStringAsync().Result);
-            return result == 1 ? true:false;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/values");
+            httpWebRequest.ContentType = "text/json";
+            httpWebRequest.Method = "POST";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            Console.WriteLine(httpResponse.StatusCode);
+            return await Task.FromResult(true);
         }
 
-        public Task<bool> DeleteItemAsync(Event item)
+        public async Task<bool> DeleteItemAsync(Event item)
         {
-            throw new NotImplementedException();
+            var _item = items.FirstOrDefault(arg => arg.Id == item.Id);
+            items.Remove(_item);
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/values/" + item.Id);
+            httpWebRequest.ContentType = "text/json";
+            httpWebRequest.Method = "DELETE";
+          
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            Console.WriteLine(httpResponse.StatusCode);
+            return await Task.FromResult(true);
         }
 
-        public Task<Event> GetItemAsync(string id)
+        public async Task<Event> GetItemAsync(string id)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
         }
 
         public async Task<IEnumerable<Event>> GetItemsAsync(bool forceRefresh = false)
         {
-            var json = await _httpClient.GetStringAsync("http://wheretoservice.azurewebsites.net/api/values");
-            var events = JsonConvert.DeserializeObject<List<Event>>(json);
-            return events;
+
+            var _items = await GetAsync();
+            items.Clear();
+            foreach (Event item in _items)
+            {
+                if (item != null)
+                {
+                    items.Add(item);
+                }
+            }
+
+            return await Task.FromResult(items);
         }
 
         public Task InitializeAsync()
@@ -43,19 +77,36 @@ namespace WhereTo.Services
             throw new NotImplementedException();
         }
 
+
+        private async Task<List<Event>> GetAsync()
+        {
+            items.Clear();
+            var httpClient = new HttpClient();
+            var json = await httpClient.GetStringAsync("http://wheretoservice.azurewebsites.net/api/values/");
+            Log.Error("json", json);
+            var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
+            return events.ToList();
+        }
+
         public Task<bool> PullLatestAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
+
 
         public Task<bool> SyncAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
-        public Task<bool> UpdateItemAsync(Event item)
+
+        public async Task<bool> UpdateItemAsync(Event item)
         {
-            throw new NotImplementedException();
+            var _item = items.FirstOrDefault(arg => arg.Id == item.Id);
+            items.Remove(_item);
+            items.Add(item);
+
+            return await Task.FromResult(true);
         }
     }
 }
