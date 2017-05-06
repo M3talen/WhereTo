@@ -8,6 +8,7 @@ namespace WhereTo
 {
     public partial class App : Application
     {
+
         public App()
         {
             NavigationPage.SetHasNavigationBar(this, false);
@@ -15,7 +16,6 @@ namespace WhereTo
             //TODO check auth status
             SetLoginPage();
         }
-
         public static void SetLoginPage()
         {
                 Current.MainPage = new NavigationPage(new LoginPage());

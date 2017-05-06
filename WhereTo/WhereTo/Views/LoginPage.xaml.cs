@@ -9,6 +9,7 @@ using Java.Lang;
 using WhereTo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Application = Android.App.Application;
 using Thread = System.Threading.Thread;
 
 namespace WhereTo.Views
@@ -47,7 +48,19 @@ namespace WhereTo.Views
         private async void GoogleLogin()
         {
             if (IsBusy) return;
-            Toast.MakeText(Forms.Context, "Hello", ToastLength.Long).Show();
+           
+            
+            Android.Accounts.AccountManager account = Android.Accounts.AccountManager.Get(Application.Context);
+            Android.Accounts.Account[] tabAccount = account.GetAccountsByType("com.google");
+            List<Android.Accounts.Account> list = new List<Android.Accounts.Account>();
+            foreach (Android.Accounts.Account act in tabAccount)
+            {
+                string name = act.Name;
+                list.Add(act); Toast.MakeText(Forms.Context, "Hello" +name , ToastLength.Long).Show();
+
+            }
+
+
             IsBusy = true;
             await LoginSuccess();
         }
