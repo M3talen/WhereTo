@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Android.Widget;
 using Java.Lang;
+using WhereTo.Helpers;
 using WhereTo.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -48,19 +49,6 @@ namespace WhereTo.Views
         private async void GoogleLogin()
         {
             if (IsBusy) return;
-           
-            
-            Android.Accounts.AccountManager account = Android.Accounts.AccountManager.Get(Application.Context);
-            Android.Accounts.Account[] tabAccount = account.GetAccountsByType("com.google");
-            List<Android.Accounts.Account> list = new List<Android.Accounts.Account>();
-            foreach (Android.Accounts.Account act in tabAccount)
-            {
-                string name = act.Name;
-                list.Add(act); Toast.MakeText(Forms.Context, "Hello" +name , ToastLength.Long).Show();
-
-            }
-
-
             IsBusy = true;
             await LoginSuccess();
         }
@@ -68,8 +56,14 @@ namespace WhereTo.Views
         private async void FacebookLogin()
         {
             if (IsBusy) return;
-            Toast.MakeText(Forms.Context, "Hello", ToastLength.Long).Show();
             IsBusy = true;
+
+            if (OAuthConfig.User == null)
+            {
+                await Navigation.PushModalAsync(new ProviderLoginPage("FaceBook"));
+            }
+
+
             await LoginSuccess();
         }
 
