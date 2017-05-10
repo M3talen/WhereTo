@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Android.Gms.Maps;
 using Android.Widget;
@@ -31,13 +32,31 @@ namespace WhereTo.Views
             });
             
             GoogleMaps.Padding = new Thickness(0, 0, 0, 0);
-/*
-            locator.PositionChanged += (sender, e) => {
-                var position = e.Position;
 
-                latitudeLabel.Text = position.Latitude;
-                longitudeLabel.Text = position.Longitude;
-            };*/
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+            {
+                Device.BeginInvokeOnMainThread(() => {
+                    _viewModel.LoadItemsCommand.Execute(null);
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                    {
+                        GoogleMaps.Pins.Clear();
+                        foreach (var tEvent in _viewModel.Events)
+                        {
+                            Position EventLocation = new Position(tEvent.Latitude, tEvent.Longitude);
+                            var pin = new Pin() {Label = tEvent.EventName, Position = EventLocation};
+                            GoogleMaps.Pins.Add(pin);
+                        }
+                    });
+                });
+                return true;
+            });
+            /*
+                        locator.PositionChanged += (sender, e) => {
+                            var position = e.Position;
+
+                            latitudeLabel.Text = position.Latitude;
+                            longitudeLabel.Text = position.Longitude;
+                        }*/
         }
 
         protected override void OnAppearing()
@@ -46,13 +65,15 @@ namespace WhereTo.Views
 
             if (_viewModel.Events.Count == 0)
                 _viewModel.LoadItemsCommand.Execute(null);
-
-            foreach (var tEvent in _viewModel.Events)
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
             {
-                Position EventLocation = new Position(tEvent.Latitude,tEvent.Longitude);
-                var pin = new Pin() {Label = tEvent.EventName, Position = EventLocation};
-                GoogleMaps.Pins.Add(pin);
-            }
+                foreach (var tEvent in _viewModel.Events)
+                {
+                    Position EventLocation = new Position(tEvent.Latitude, tEvent.Longitude);
+                    var pin = new Pin() {Label = tEvent.EventName, Position = EventLocation};
+                    GoogleMaps.Pins.Add(pin);
+                }
+            });
         }
 
         private async Task GetUserPositionAsync()

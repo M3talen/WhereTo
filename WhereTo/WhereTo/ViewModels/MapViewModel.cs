@@ -32,10 +32,11 @@ namespace WhereTo.ViewModels
 
 	    async Task ExecuteLoadItemsCommand()
 	    {
+            /*
 	        if (IsBusy)
 	            return;
 
-	        IsBusy = true;
+	        IsBusy = true;*/
 
 	        try
 	        {
