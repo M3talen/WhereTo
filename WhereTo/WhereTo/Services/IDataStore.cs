@@ -9,9 +9,10 @@ namespace WhereTo.Services
 		Task<bool> UpdateItemAsync(T item);
 		Task<bool> DeleteItemAsync(T item);
 		Task<T> GetItemAsync(string id);
-		Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+		Task<IEnumerable<T>> GetItemsAsync();
+        Task<IEnumerable<T>> GetItemsAsync(double longitude, double latitude,double radius);
 
-		Task InitializeAsync();
+        Task InitializeAsync();
 		Task<bool> PullLatestAsync();
 		Task<bool> SyncAsync();
 	}

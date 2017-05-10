@@ -33,7 +33,10 @@ namespace WhereTo.ViewModels
             try
             {
                 Events.Clear();
-                var items = await DataStore.GetItemsAsync();
+                var lat = Application.Current.Properties["lat"] as double?;
+                var longi = Application.Current.Properties["long"] as double?;
+                var radius = Application.Current.Properties["radius"] as double?;
+                var items = await DataStore.GetItemsAsync(longi ?? 0, lat ?? 0,radius ?? 0);
                 Events.ReplaceRange(items);
             }
             catch (Exception ex)

@@ -77,6 +77,7 @@ namespace WhereTo.Views
                     StrokeWidth = 3f,
                     FillColor = Color.FromRgba(255, 152, 0, 32)
                 };
+                Application.Current.Properties["radius"] = 1.25;
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
                 {
                     ActivityIndicator.IsRunning = false;
@@ -85,6 +86,7 @@ namespace WhereTo.Views
                     GoogleMaps.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(1500)));
                     Application.Current.Properties["lat"] = position.Latitude;
                     Application.Current.Properties["long"] = position.Longitude;
+                   
                 });
             }
             catch (Exception ex)

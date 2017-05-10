@@ -66,7 +66,7 @@ namespace WhereTo.Views
                             pos = new Position(lat.Value, longi.Value);
                     PinPosition.Position = pos;
                     GoogleMapsPicker.Pins.Add(PinPosition);
-                    GoogleMapsPicker.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(1000)), true);
+                    GoogleMapsPicker.MoveToRegion(MapSpan.FromCenterAndRadius(pos, Distance.FromMeters(1500)), true);
                 });
 
             }
@@ -85,7 +85,7 @@ namespace WhereTo.Views
                 {
                     PinPosition.Position = new Position(position.Latitude,position.Longitude);
                     GoogleMapsPicker.Pins.Add(PinPosition);
-                    GoogleMapsPicker.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(1000)), false);
+                    GoogleMapsPicker.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(1500)), false);
                 });
             }
             catch (Exception ex)

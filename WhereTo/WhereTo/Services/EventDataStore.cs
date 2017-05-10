@@ -17,14 +17,14 @@ namespace WhereTo.Services
     class EventDataStore : IDataStore<Event>
     {
         private HttpClient _httpClient = new HttpClient();
-
+        private string _url = "http://wheretoservice.azurewebsites.net/api/event";
         bool isInitialized;
         List<Event> items = new List<Event>();
 
         public async Task<bool> AddItemAsync(Event item)
         {
             var data = JsonConvert.SerializeObject(item);
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/event");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url);
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -42,7 +42,7 @@ namespace WhereTo.Services
             var _item = items.FirstOrDefault(arg => arg.Id == item.Id);
             items.Remove(_item);
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/event/" + item.Id);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url + item.Id);
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "DELETE";
           
@@ -56,11 +56,18 @@ namespace WhereTo.Services
             return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
         }
 
-        public async Task<IEnumerable<Event>> GetItemsAsync(bool forceRefresh = false)
+        public async Task<IEnumerable<Event>> GetItemsAsync(double longitude, double latitude,double radius)
         {
-
-            var _items = await GetAsync();
             items.Clear();
+            //radius = 5;
+            string url = _url + "/long:"+longitude +"lat:"+latitude+"radius:"+radius;
+            Log.Error("url",url);
+            var httpClient = new HttpClient();
+            var json = await httpClient.GetStringAsync(url);
+            Log.Error("json", json);
+            var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
+            var _items = events.ToList();
+
             foreach (Event item in _items)
             {
                 if (item != null)
@@ -72,20 +79,14 @@ namespace WhereTo.Services
             return await Task.FromResult(items);
         }
 
-        public Task InitializeAsync()
+        public Task<IEnumerable<Event>> GetItemsAsync()
         {
             throw new NotImplementedException();
         }
 
-
-        private async Task<List<Event>> GetAsync()
+        public Task InitializeAsync()
         {
-            items.Clear();
-            var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync("http://wheretoservice.azurewebsites.net/api/event/");
-            Log.Error("json", json);
-            var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
-            return events.ToList();
+            throw new NotImplementedException();
         }
 
         public Task<bool> PullLatestAsync()
