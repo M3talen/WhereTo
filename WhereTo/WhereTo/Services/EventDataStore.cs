@@ -24,7 +24,7 @@ namespace WhereTo.Services
         public async Task<bool> AddItemAsync(Event item)
         {
             var data = JsonConvert.SerializeObject(item);
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/values");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/event");
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -42,7 +42,7 @@ namespace WhereTo.Services
             var _item = items.FirstOrDefault(arg => arg.Id == item.Id);
             items.Remove(_item);
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/values/" + item.Id);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://wheretoservice.azurewebsites.net/api/event/" + item.Id);
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "DELETE";
           
@@ -82,7 +82,7 @@ namespace WhereTo.Services
         {
             items.Clear();
             var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync("http://wheretoservice.azurewebsites.net/api/values/");
+            var json = await httpClient.GetStringAsync("http://wheretoservice.azurewebsites.net/api/event/");
             Log.Error("json", json);
             var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
             return events.ToList();
