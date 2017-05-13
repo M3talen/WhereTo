@@ -11,7 +11,7 @@ namespace WhereTo.ViewModels
 		/// <summary>
 		/// Get the azure service instance
 		/// </summary>
-		public IDataStore<Event> DataStore => DependencyService.Get<IDataStore<Event>>();
+		public IEventDataStore EventDataStore => DependencyService.Get<EventDataStore>();
 
 		bool isBusy = false;
 

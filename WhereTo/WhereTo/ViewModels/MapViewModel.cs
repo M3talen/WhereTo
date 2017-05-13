@@ -26,7 +26,7 @@ namespace WhereTo.ViewModels
 		    {
 		        var _item = item as Event;
 		        Events.Add(_item);
-		        await DataStore.AddItemAsync(_item);
+		        await EventDataStore.AddItemAsync(_item);
 		    });
         }
 
@@ -44,7 +44,7 @@ namespace WhereTo.ViewModels
                 var lat = Application.Current.Properties["lat"] as double?;
                 var longi = Application.Current.Properties["long"] as double?;
                 var radius = Application.Current.Properties["radius"] as double?;
-                var items = await DataStore.GetItemsAsync(longi ?? 0, lat ?? 0, radius ?? 0);
+                var items = await EventDataStore.GetItemsAsync(longi ?? 0, lat ?? 0, radius ?? 0);
                 Events.ReplaceRange(items.Distinct());
 	        }
 	        catch (Exception ex)

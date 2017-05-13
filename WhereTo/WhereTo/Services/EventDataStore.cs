@@ -61,9 +61,7 @@ namespace WhereTo.Services
         {
             items.Clear();
             string url = _url + "/long:"+longitude +"lat:"+latitude+"radius:"+radius;
-            Log.Error("url",url);
             var json = await _httpClient.GetStringAsync(url);
-            Log.Error("json", json);
             var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
             var _items = events.ToList();
 

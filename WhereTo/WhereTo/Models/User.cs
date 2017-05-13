@@ -15,6 +15,10 @@ namespace WhereTo.Models
         private string _description = string.Empty;
         private string _profilePicURL = string.Empty;
         private string _descShort = string.Empty;
+        /**
+         * Stringovi attending i attended su zapravo json zapis
+         * liste dogadaja.
+        **/
         private string _attending = string.Empty;
         private string _attended = string.Empty;
 

@@ -14,7 +14,7 @@ namespace WhereTo.Services
     public class UserDataStore : IUserDataStore
     {
         private HttpClient _httpClient = new HttpClient();
-        private string _url = "http://wheretoservice.azurewebsites.net/api/user";
+        private string _url = "http://wheretoservice.azurewebsites.net/api/user"; 
         List<User> items = new List<User>();
 
         public async Task<bool> AddItemAsync(User _user)
