@@ -7,18 +7,16 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Android.Util;
 using WhereTo.Models;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereTo.Services.EventDataStore))]
 namespace WhereTo.Services
 {
-    class EventDataStore : IDataStore<Event>
+    public class EventDataStore : IEventDataStore
     {
         private HttpClient _httpClient = new HttpClient();
         private string _url = "http://wheretoservice.azurewebsites.net/api/event";
-        bool isInitialized;
         List<Event> items = new List<Event>();
 
         public async Task<bool> AddItemAsync(Event item)
@@ -51,19 +49,20 @@ namespace WhereTo.Services
             return await Task.FromResult(true);
         }
 
-        public async Task<Event> GetItemAsync(string id)
+        public async Task<Event> GetItemAsync(int id)
         {
-            return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
+            string url = _url + "/" + id;
+            var json = await _httpClient.GetStringAsync(url);
+            var events = JsonConvert.DeserializeObject<Event>(json);
+            return await Task.FromResult(events);
         }
 
         public async Task<IEnumerable<Event>> GetItemsAsync(double longitude, double latitude,double radius)
         {
             items.Clear();
-            //radius = 5;
             string url = _url + "/long:"+longitude +"lat:"+latitude+"radius:"+radius;
             Log.Error("url",url);
-            var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync(url);
+            var json = await _httpClient.GetStringAsync(url);
             Log.Error("json", json);
             var events = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
             var _items = events.ToList();
@@ -78,29 +77,7 @@ namespace WhereTo.Services
 
             return await Task.FromResult(items);
         }
-
-        public Task<IEnumerable<Event>> GetItemsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task InitializeAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> PullLatestAsync()
-        {
-            return Task.FromResult(true);
-        }
-
-
-        public Task<bool> SyncAsync()
-        {
-            return Task.FromResult(true);
-        }
-
-
+        
         public async Task<bool> UpdateItemAsync(Event item)
         {
             var _item = items.FirstOrDefault(arg => arg.Id == item.Id);

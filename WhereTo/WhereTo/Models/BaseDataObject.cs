@@ -8,7 +8,6 @@ namespace WhereTo.Models
     {
         public BaseDataObject()
         {
-            Id = Guid.NewGuid().ToString();
         }
 
         /// <summary>
@@ -16,6 +15,6 @@ namespace WhereTo.Models
         /// </summary>
 
         [JsonIgnore]
-        public string Id { get; set; }
+        public int Id { get; set; }
     }
 }

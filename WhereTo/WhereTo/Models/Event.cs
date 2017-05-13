@@ -26,6 +26,7 @@ namespace WhereTo.Models
         private DateTime _startDateTime = DateTime.Now;
         private DateTime _endtDateTime = DateTime.Now;
         private string _description = string.Empty;
+        private string _userId = string.Empty;
 
         [JsonIgnore]
         private ImageSource _icon = string.Empty;
@@ -98,8 +99,8 @@ namespace WhereTo.Models
                 return _icon;
             }
         }
-        
 
+        public string UserId { get => _userId; set => _userId = value; }
 
         public override bool Equals(object obj)
         {
