@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
+using Android.Util;
 
 [assembly: Dependency(typeof(WhereTo.Services.UserDataStore))]
 namespace WhereTo.Services
@@ -33,12 +34,20 @@ namespace WhereTo.Services
                 streamWriter.Flush();
             }
             
-            var httpResponse = httpWebRequest.GetResponse();
-            Match m = Regex.Match(httpResponse.ToString(), "reasonPhrase\":\"\\d+");
+            var response = httpWebRequest.GetResponse();
+            byte[] b = new byte[250];
+            char[] c = new char[250];
+            response.GetResponseStream().Read(b, 0, 250);
+            for (int i = 0; i < b.Length; i++)
+            {
+                c[i] = (char)b[i];
+            }
+            
+            String s = new String(c);
+            Match m = Regex.Match(s, "reasonPhrase\":\"\\d+");
             var split = m.ToString().Split('"');
-            int index = Convert.ToInt32(split[2]);
-
-            Console.WriteLine("INDEX: "+index);
+            int index = int.Parse(split[2]);
+            
             return await Task.FromResult(index);
         }
 
