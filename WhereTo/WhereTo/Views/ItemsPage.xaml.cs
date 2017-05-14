@@ -10,13 +10,16 @@ namespace WhereTo.Views
 	public partial class ItemsPage : ContentPage
 	{
 		ItemsViewModel viewModel;
-
-		public ItemsPage()
+	    public static bool first;
+        public ItemsPage()
 		{
 			InitializeComponent();
-
+		    first = true;
 			BindingContext = viewModel = new ItemsViewModel();
-		}
+
+		    viewModel.ItemsListView = ItemsListView;
+		    ItemsListView.ItemsSource = viewModel.Events;
+        }
 
 		async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
 		{
@@ -38,9 +41,14 @@ namespace WhereTo.Views
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-
-			if (viewModel.Events.Count == 0)
-				viewModel.LoadItemsCommand.Execute(null);
+            if (!first) {
+                if (viewModel.Events.Count == 0)
+                {
+                    viewModel.LoadItemsCommand.Execute(null);
+                    ItemsListView.RefreshCommand.Execute(null);
+                }
+            }
+		    first = false;
 		}
 	}
 }

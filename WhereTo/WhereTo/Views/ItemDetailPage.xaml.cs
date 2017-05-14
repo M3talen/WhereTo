@@ -28,13 +28,13 @@ namespace WhereTo.Views
         }
 
 
-        public ICommand JoinEvent { get; }
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
 		{
 			InitializeComponent();
             
             BindingContext = this.viewModel = viewModel;
+		    viewModel.JoinButton = ButtonJoin;
             Position EventLocation = new Position(viewModel.Item.Latitude, viewModel.Item.Longitude);
 		    GoogleMapsPreview?.MoveToRegion(MapSpan.FromCenterAndRadius(EventLocation, Distance.FromMeters(1000)), false);
 		    var pin = new Pin() { Label = viewModel.Item.EventName, Position = EventLocation };
@@ -67,23 +67,7 @@ namespace WhereTo.Views
 		        
             }
 
-		    JoinEvent= new Command(() =>
-		    {
-		        if (ButtonJoin.Text.Equals("Save"))
-		        {
-		            MessagingCenter.Send(this, "UpdateEvent", viewModel.Item);
-		        }
-		        else
-		        {
-		            LocalNotificationsImplementation.NotificationIconId = Resource.Drawable.IcDialogAlert;
-                    CrossLocalNotifications.Current.Show("Where To - Joined event", $"Joined event { viewModel.Item.EventName } at {viewModel.Item.StartDate.ToShortDateString()} - {viewModel.Item.StartTime}");
-		            var date = viewModel.Item.StartDate;
-		            date.AddHours(viewModel.Item.StartTime.Hours - 1);
-		            date.AddMinutes(viewModel.Item.StartTime.Minutes);
-                    CrossLocalNotifications.Current.Show("Reminder", $"Pending event { viewModel.Item.EventName } at {viewModel.Item.StartDate.ToShortDateString()} - {viewModel.Item.StartTime}", 101, date);
-                }
-		        UserDialogs.Instance.Alert("Server request - null");
-		    });
+		   
 
         }
 

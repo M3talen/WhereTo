@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Android.Gms.Maps;
@@ -18,14 +20,15 @@ namespace WhereTo.Views
     public partial class MapPage : ContentPage
     {
         MapViewModel _viewModel;
+        public static bool first;
 
         public MapPage()
         {
             InitializeComponent();
-
+            first = true;
             BindingContext = _viewModel = new MapViewModel();
-            
 
+            _viewModel.GoogleMaps = GoogleMaps;
             Task.Run(async () =>
             {
                 await GetUserPositionAsync();
@@ -33,7 +36,7 @@ namespace WhereTo.Views
             
             GoogleMaps.Padding = new Thickness(0, 0, 0, 0);
 
-            
+
             /*
                         locator.PositionChanged += (sender, e) => {
                             var position = e.Position;
@@ -46,19 +49,25 @@ namespace WhereTo.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-             _viewModel.LoadItemsCommand.Execute(null);
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+            if (!first)
             {
-                foreach (var tEvent in _viewModel.Events)
-                {
-                    Position EventLocation = new Position(tEvent.Latitude, tEvent.Longitude);
-                    var pin = new Pin() {Label = tEvent.EventName, Position = EventLocation};
-                    GoogleMaps.Pins.Add(pin);
-                }
-            });
-        }
 
+
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                {
+                    _viewModel.LoadItemsCommand.Execute(null);
+                    foreach (var tEvent in _viewModel.Events)
+                    {
+                        Position EventLocation = new Position(tEvent.Latitude, tEvent.Longitude);
+                        var pin = new Pin() { Label = tEvent.EventName, Position = EventLocation };
+                        GoogleMaps.Pins.Add(pin);
+                    }
+                });
+            }
+            first = false;
+           
+        }
+        
         private async Task GetUserPositionAsync()
         { 
             try
@@ -91,6 +100,10 @@ namespace WhereTo.Views
                     Application.Current.Properties["lat"] = position.Latitude;
                     Application.Current.Properties["long"] = position.Longitude;
 
+                });
+
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                {
                     _viewModel.LoadItemsCommand.Execute(null);
                     foreach (var tEvent in _viewModel.Events)
                     {
@@ -99,6 +112,7 @@ namespace WhereTo.Views
                         GoogleMaps.Pins.Add(pin);
                     }
                 });
+
             }
             catch (Exception ex)
             {

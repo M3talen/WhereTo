@@ -7,6 +7,7 @@ using Rg.Plugins.Popup.Extensions;
 using WhereTo.Models;
 using WhereTo.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Xaml;
 
 namespace WhereTo.Views
@@ -16,12 +17,15 @@ namespace WhereTo.Views
     {
         AllItemsViewModel viewModel;
 
+        public static bool first;
         public AllItemsPage()
         {
             InitializeComponent();
-
+            first = false;
             BindingContext = viewModel = new AllItemsViewModel();
-        }
+            viewModel.ItemsListView = ItemsListView;
+            ItemsListView.ItemsSource = viewModel.Events;
+        }   
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
@@ -43,9 +47,15 @@ namespace WhereTo.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            if (viewModel.Events.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            if (!first)
+            {
+                if (viewModel.Events.Count == 0)
+                {
+                    viewModel.LoadItemsCommand.Execute(null);
+                    ItemsListView.RefreshCommand.Execute(null);
+                }
+            }
+            first = false;
         }
     }
 }

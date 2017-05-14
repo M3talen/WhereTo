@@ -1,4 +1,7 @@
 ﻿using System.Linq;
+using System.Windows.Input;
+using Acr.UserDialogs;
+using Plugin.LocalNotifications;
 using WhereTo.Helpers;
 using WhereTo.Models;
 using WhereTo.Views;
@@ -19,12 +22,29 @@ namespace WhereTo.ViewModels
 		    {
 		        await EventDataStore.UpdateItemAsync(iteme);
 		    });
+		    JoinEvent = new Command(() =>
+		    {
+		        if (JoinButton.Text.Equals("Save"))
+		        {
+		            MessagingCenter.Send(this, "UpdateEvent",Item);
+		        }
+		        else
+		        {
+		            CrossLocalNotifications.Current.Show("Where To - Joined event", $"Joined event { Item.EventName } " +
+		                                                                            $"at {Item.StartDate.ToShortDateString()} - {Item.StartTime}");
 
+                    var date = Item.StartDate;
+		            date.AddHours(Item.StartTime.Hours - 1);
+		            date.AddMinutes(Item.StartTime.Minutes);
+		            CrossLocalNotifications.Current.Show("Reminder", $"Pending event { Item.EventName } at {Item.StartDate.ToShortDateString()} - {Item.StartTime}", 101, date);
+		        }
+		    });
         }
 
+        public Button JoinButton { get; set; }
+	    public ICommand JoinEvent { get; set; }
 
-
-		int quantity = 1;
+        int quantity = 1;
 		public int Quantity
 		{
 			get { return quantity; }
