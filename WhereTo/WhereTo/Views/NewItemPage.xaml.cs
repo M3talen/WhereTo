@@ -27,7 +27,7 @@ namespace WhereTo.Views
         public NewItemPage()
         {
             InitializeComponent();
-
+            var id = Application.Current.Properties["user_id"] as int?;
             _event = new Event()
             {
                 EventName = "Event Name",
@@ -35,7 +35,8 @@ namespace WhereTo.Views
                 StartDate = DateTime.Now,
                 StartTime = DateTime.Now.TimeOfDay,
                 EndDate = DateTime.Now,
-                EndTime = DateTime.Now.TimeOfDay
+                EndTime = DateTime.Now.TimeOfDay,
+                UserId =  id?.ToString()
             };
 
             PinPosition = new Pin() { Label = _event.EventName};

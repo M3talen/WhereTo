@@ -1,15 +1,19 @@
 ﻿
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using Android.Support.Design.Widget;
 using NControl.Controls;
+using Plugin.LocalNotifications;
 using Rg.Plugins.Popup.Pages;
 using WhereTo.ViewModels;
 
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Xfx;
+using Android;
+using Resource = Android.Resource;
 
 namespace WhereTo.Views
 {
@@ -67,6 +71,15 @@ namespace WhereTo.Views
 		        if (ButtonJoin.Text.Equals("Save"))
 		        {
 		            MessagingCenter.Send(this, "UpdateEvent", viewModel.Item);
+		        }
+		        else
+		        {
+		            LocalNotificationsImplementation.NotificationIconId = Resource.Drawable.IcDialogAlert;
+                    CrossLocalNotifications.Current.Show("Where To - Joined event", $"Joined event { viewModel.Item.EventName } at {viewModel.Item.StartDate.ToShortDateString()} - {viewModel.Item.StartTime}");
+		            var date = viewModel.Item.StartDate;
+		            date.AddHours(viewModel.Item.StartTime.Hours - 1);
+		            date.AddMinutes(viewModel.Item.StartTime.Minutes);
+                    CrossLocalNotifications.Current.Show("Reminder", $"Pending event { viewModel.Item.EventName } at {viewModel.Item.StartDate.ToShortDateString()} - {viewModel.Item.StartTime}", 101, date);
                 }
 		        UserDialogs.Instance.Alert("Server request - null");
 		    });

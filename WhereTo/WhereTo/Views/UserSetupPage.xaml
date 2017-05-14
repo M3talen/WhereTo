@@ -3,18 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:NControls="clr-namespace:NControl.Controls;assembly=NControl.Controls"
              x:Class="WhereTo.Views.UserSetupPage">
-    <ContentPage.Content >
 
-        <Frame Padding="8" Margin="8" VerticalOptions="Center" BackgroundColor="{StaticResource DarkBackgroundColor}" HorizontalOptions="Center" >
-            <Frame.Content>
-                <StackLayout Spacing="8" Margin="4" BackgroundColor="White" Orientation="Vertical">
-                    <NControls:FloatingLabelControl Placeholder="First name" Text="{Binding User.FirstName, Mode=TwoWay}" />
-                    <NControls:FloatingLabelControl Placeholder="Last name" Text="{Binding User.LastName, Mode=TwoWay}" />
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource DarkerBackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout BackgroundColor="{StaticResource Primary}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                    <ContentView Padding="0,40,0,40" VerticalOptions="Fill">
+                        <Image Source="logo.png" VerticalOptions="Center" HeightRequest="96"/>
 
-                    <Button Text="Save" Command="{Binding AddCommand}" x:Name="ButtonSave" IsEnabled="True"></Button>
-
+                    </ContentView>
                 </StackLayout>
-            </Frame.Content>
-        </Frame>
+            </StackLayout>
+
+            <ScrollView Grid.Row="1">
+                <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="6">
+
+                    <Frame VerticalOptions="Center"  Margin="8">
+
+                        <StackLayout  VerticalOptions="FillAndExpand"  Margin="8" x:Name="StackLayoutLogin">
+
+                            <Label LineBreakMode="WordWrap" FontAttributes="Bold" Scale="1.5" Margin="16" HorizontalTextAlignment="Center" Text="Please setup your profile"></Label>
+
+                            <NControls:FloatingLabelControl Placeholder="First name" Text="{Binding User.FirstName, Mode=TwoWay}" />
+                            <NControls:FloatingLabelControl Placeholder="Last name" Text="{Binding User.LastName, Mode=TwoWay}" />
+
+                            <Button Text="Save" Command="{Binding AddCommand}" x:Name="ButtonSave" IsEnabled="True"></Button>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+
     </ContentPage.Content>
+    
+
 </ContentPage>
