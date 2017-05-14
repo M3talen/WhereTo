@@ -182,12 +182,16 @@ namespace WhereTo.Views
 
         private async void Cathegory_OnFocus(object sender, FocusEventArgs e)
         {
-            (sender as FloatingLabelControl)?.Unfocus();
+            var control = ((FloatingLabelControl) sender);
+            control.Unfocus();
 
             var action = await DisplayActionSheet("Cathegory", "Cancel", null, "Drink", "Food", "Sport");
             try
             {
-                Enum.Parse(typeof(EventCathegory), action);
+                
+                control.Text = action;
+                _event.Cathegory = (EventCathegory) Enum.Parse(typeof(EventCathegory), action);
+
             }
             catch (Exception exception)
             {
