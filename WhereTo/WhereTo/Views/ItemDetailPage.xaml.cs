@@ -62,6 +62,7 @@ namespace WhereTo.Views
 		            StartTimePicker.IsEnabled = false;
 		            EndDatePicker.IsEnabled = false;
 		            EndTimePicker.IsEnabled = false;
+		        ButtonJoin.IsEnabled = true;
 		            ButtonJoin.Text = "Join";
 		        
             }

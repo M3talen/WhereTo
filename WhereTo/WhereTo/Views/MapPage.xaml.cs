@@ -33,23 +33,7 @@ namespace WhereTo.Views
             
             GoogleMaps.Padding = new Thickness(0, 0, 0, 0);
 
-            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
-            {
-                Device.BeginInvokeOnMainThread(() => {
-                    _viewModel.LoadItemsCommand.Execute(null);
-                    Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-                    {
-                        GoogleMaps.Pins.Clear();
-                        foreach (var tEvent in _viewModel.Events)
-                        {
-                            Position EventLocation = new Position(tEvent.Latitude, tEvent.Longitude);
-                            var pin = new Pin() {Label = tEvent.EventName, Position = EventLocation};
-                            GoogleMaps.Pins.Add(pin);
-                        }
-                    });
-                });
-                return true;
-            });
+            
             /*
                         locator.PositionChanged += (sender, e) => {
                             var position = e.Position;
@@ -63,8 +47,7 @@ namespace WhereTo.Views
         {
             base.OnAppearing();
 
-            if (_viewModel.Events.Count == 0)
-                _viewModel.LoadItemsCommand.Execute(null);
+             _viewModel.LoadItemsCommand.Execute(null);
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
             {
                 foreach (var tEvent in _viewModel.Events)
@@ -107,7 +90,14 @@ namespace WhereTo.Views
                     GoogleMaps.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(1500)));
                     Application.Current.Properties["lat"] = position.Latitude;
                     Application.Current.Properties["long"] = position.Longitude;
-                   
+
+                    _viewModel.LoadItemsCommand.Execute(null);
+                    foreach (var tEvent in _viewModel.Events)
+                    {
+                        Position EventLocation = new Position(tEvent.Latitude, tEvent.Longitude);
+                        var pin = new Pin() { Label = tEvent.EventName, Position = EventLocation };
+                        GoogleMaps.Pins.Add(pin);
+                    }
                 });
             }
             catch (Exception ex)

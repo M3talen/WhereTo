@@ -58,7 +58,8 @@
                                                         Text="{Binding Item.EndTime, StringFormat='{}{0:hh\\:mm}'}" Grid.Row="1" Grid.Column="1"/>
                         </Grid>
 
-                    <Button Text="Join event" x:Name="ButtonJoin" HeightRequest="36" Margin="8"  TextColor="White" BackgroundColor="{StaticResource DarkerBackgroundColor}" Command="{Binding JoinEvent}" />
+                    <Button Text="Join event" x:Name="ButtonJoin" HeightRequest="36" Margin="8" 
+                            TextColor="White" BackgroundColor="{StaticResource DarkerBackgroundColor}" Command="{Binding JoinEvent}" />
 
                 </StackLayout>
             </Frame.Content>

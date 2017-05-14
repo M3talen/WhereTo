@@ -22,6 +22,8 @@ namespace WhereTo.ViewModels
 
         }
 
+
+
 		int quantity = 1;
 		public int Quantity
 		{
