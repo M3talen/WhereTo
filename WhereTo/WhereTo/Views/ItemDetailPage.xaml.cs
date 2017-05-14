@@ -36,8 +36,38 @@ namespace WhereTo.Views
 		    var pin = new Pin() { Label = viewModel.Item.EventName, Position = EventLocation };
 		    GoogleMapsPreview?.Pins.Add(pin);
 
+		    var id = Application.Current.Properties["user_id"] as int?;
+		    if (viewModel.Item.UserId.Equals(id.Value.ToString()))
+		    {
+		        EntryName.IsEnabled = true;
+		        EntryDesc.IsEnabled = true;
+		        EntryCath.IsEnabled = true;
+		        StartDatePicker.IsEnabled = true;
+		        StartTimePicker.IsEnabled = true;
+		        EndDatePicker.IsEnabled = true;
+		        EndTimePicker.IsEnabled = true;
+		        ButtonJoin.Text = "Save";
+		    }
+		    else
+		    {
+		        
+		            EntryName.IsEnabled = false;
+		            EntryDesc.IsEnabled = false;
+		            EntryCath.IsEnabled = false;
+		            StartDatePicker.IsEnabled = false;
+		            StartTimePicker.IsEnabled = false;
+		            EndDatePicker.IsEnabled = false;
+		            EndTimePicker.IsEnabled = false;
+		            ButtonJoin.Text = "Join";
+		        
+            }
+
 		    JoinEvent= new Command(() =>
 		    {
+		        if (ButtonJoin.Text.Equals("Save"))
+		        {
+		            MessagingCenter.Send(this, "UpdateEvent", viewModel.Item);
+                }
 		        UserDialogs.Instance.Alert("Server request - null");
 		    });
 

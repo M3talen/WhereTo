@@ -129,7 +129,7 @@ namespace WhereTo.Views
             MessagingCenter.Send(this, "AddItem", _event);
             await Navigation.PopPopupAsync();
         }
-       
+
         private void StartDate_OnFocused(object sender, FocusEventArgs e)
         {
             (sender as FloatingLabelControl)?.Unfocus();

@@ -37,8 +37,11 @@ namespace WhereTo.Views
             try
             {
                 IsBusy = true;
-
-                await Navigation.PushModalAsync(App.GetMainPage());
+                var id = Xamarin.Forms.Application.Current.Properties["user_id"] as int?;
+                if (id != null && id.Value == 0)
+                    await Navigation.PushModalAsync(new NavigationPage(new UserSetupPage()));
+                else
+                    await Navigation.PushModalAsync(App.GetMainPage());
             }
             finally
             {

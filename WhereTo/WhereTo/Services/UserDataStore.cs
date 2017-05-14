@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using WhereTo.Models;
 using Newtonsoft.Json;
 using System.Linq;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(WhereTo.Services.UserDataStore))]
 namespace WhereTo.Services
 {
     public class UserDataStore : IUserDataStore
@@ -17,12 +19,13 @@ namespace WhereTo.Services
         private string _url = "http://wheretoservice.azurewebsites.net/api/user"; 
         List<User> items = new List<User>();
 
-        public async Task<bool> AddItemAsync(User _user)
+        public async Task<int> AddItemAsync(User _user)
         {
             var data = JsonConvert.SerializeObject(_user);
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url);
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "POST";
+            Console.WriteLine(httpWebRequest.RequestUri);
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 streamWriter.Write(data);
@@ -30,7 +33,15 @@ namespace WhereTo.Services
             }
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             Console.WriteLine(httpResponse.StatusCode);
-            return await Task.FromResult(true);
+            WebHeaderCollection header = httpResponse.Headers;
+
+            var encoding = ASCIIEncoding.ASCII;
+            using (var reader = new System.IO.StreamReader(httpResponse.GetResponseStream(), encoding))
+            {
+                string responseText = reader.ReadToEnd();
+                Console.WriteLine(responseText);
+            }
+            return await Task.FromResult(-1);
         }
 
         public async Task<bool> DeleteItemAsync(User _user)

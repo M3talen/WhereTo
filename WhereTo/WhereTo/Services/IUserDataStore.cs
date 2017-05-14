@@ -8,7 +8,7 @@ namespace WhereTo.Services
 {
     public interface IUserDataStore
     {
-        Task<bool> AddItemAsync(User _user);
+        Task<int> AddItemAsync(User _user);
         Task<bool> UpdateItemAsync(User _user);
         Task<bool> DeleteItemAsync(User _user);
         Task<User> GetItemAsync(int id);

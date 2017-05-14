@@ -14,13 +14,13 @@ namespace WhereTo.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            base.OnCreate(bundle);
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsGoogleMaps.Init(this, bundle);
             UserDialogs.Init(this);
+            base.OnCreate(bundle);
             LoadApplication(new App());
         }
 

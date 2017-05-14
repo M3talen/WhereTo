@@ -15,10 +15,19 @@ namespace WhereTo
             InitializeComponent();
             //TODO check auth status
             SetLoginPage();
+
         }
         public static void SetLoginPage()
         {
+            if (Application.Current.Properties.ContainsKey("user_logged"))
+            {
+                Current.MainPage = GetMainPage();
+            }
+            else
+            {
+                Application.Current.Properties["user_id"] = 0;
                 Current.MainPage = new NavigationPage(new LoginPage());
+            }
         }
 
         public static Page GetMainPage()
@@ -33,8 +42,12 @@ namespace WhereTo
                         Icon = Device.OnPlatform<string>("tab_about.png", null, null)
                     },new NavigationPage(new ItemsPage())
                     {
-                        Title = "Browse",
+                        Title = "Nearby",
                         Icon = Device.OnPlatform<string>("tab_feed.png", null, null)
+                    },new NavigationPage(new AllItemsPage())
+                    {
+                    Title = "Browse",
+                    Icon = Device.OnPlatform<string>("tab_feed.png", null, null)
                     }
                 }
             };
