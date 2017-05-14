@@ -13,7 +13,7 @@
             <StackLayout BackgroundColor="{StaticResource Primary}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
                     <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
-                        <Image Source="logo.png" VerticalOptions="Center" HeightRequest="128"/>
+                        <Image Source="logo.png" VerticalOptions="Center" HeightRequest="96"/>
                         
                     </ContentView>
                 </StackLayout>
@@ -31,8 +31,8 @@
                             <ActivityIndicator IsVisible="{Binding Source={x:Reference LoginContentPage}, Path=IsBusy}" IsRunning="{Binding Source={x:Reference LoginContentPage}, Path=IsBusy}" />
                             <Button Text="Demo login" HeightRequest="48" Margin="4"  TextColor="White" BackgroundColor="{StaticResource Primary}" Command="{Binding GoogleLoginCommand}" />
                             <Button Text="Login with Facebook" HeightRequest="48" Margin="4"  TextColor="White" BackgroundColor="#3b5998" Command="{Binding FacebookLoginCommand}" />
-                            <Button Text="Login with G+"   HeightRequest="48" Margin="4" TextColor="White" BackgroundColor="#D34836" IsEnabled="False" Command="{Binding GoogleLoginCommand}" />
-                            <Button Text="Login with Twitter"  HeightRequest="48" Margin="4" TextColor="White" BackgroundColor="#00aced" IsEnabled="False" />
+                            <Button Text="Login with G+"   HeightRequest="48" Margin="4" TextColor="White" BackgroundColor="#D34836" IsEnabled="False" />
+                            <Button Text="Login with Twitter"  HeightRequest="48" Margin="4" TextColor="White" BackgroundColor="#00aced" IsEnabled="False"/>
                         </StackLayout>
                     </Frame>
                 </StackLayout>

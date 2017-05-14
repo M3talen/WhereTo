@@ -23,10 +23,6 @@ namespace WhereTo.ViewModels
 
         async Task ExecuteLoadItemsCommand()
         {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
 
             try
             {
@@ -46,10 +42,6 @@ namespace WhereTo.ViewModels
                     Message = "Unable to load items.",
                     Cancel = "OK"
                 }, "message");
-            }
-            finally
-            {
-                IsBusy = false;
             }
         }
     }

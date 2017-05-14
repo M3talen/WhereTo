@@ -3336,6 +3336,7 @@ namespace WhereTo.Droid
 			global::NControl.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId = global::WhereTo.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::NControl.Droid.Resource.Styleable.ViewStubCompat_android_layout = global::WhereTo.Droid.Resource.Styleable.ViewStubCompat_android_layout;
 			global::NGraphics.Android.Resource.String.library_name = global::WhereTo.Droid.Resource.String.library_name;
+			global::Plugin.LocalNotifications.Resource.Drawable.plugin_lc_smallicon = global::WhereTo.Droid.Resource.Drawable.plugin_lc_smallicon;
 			global::Splat.Resource.String.library_name = global::WhereTo.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::WhereTo.Droid.Resource.Attribute.actionBarSize;
 		}
@@ -5653,26 +5654,26 @@ namespace WhereTo.Droid
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
-			// aapt resource value: 0x7f020130
-			public const int avd_hide_password_1 = 2130837808;
-			
 			// aapt resource value: 0x7f020131
-			public const int avd_hide_password_2 = 2130837809;
+			public const int avd_hide_password_1 = 2130837809;
 			
 			// aapt resource value: 0x7f020132
-			public const int avd_hide_password_3 = 2130837810;
+			public const int avd_hide_password_2 = 2130837810;
+			
+			// aapt resource value: 0x7f020133
+			public const int avd_hide_password_3 = 2130837811;
 			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
 			
-			// aapt resource value: 0x7f020133
-			public const int avd_show_password_1 = 2130837811;
-			
 			// aapt resource value: 0x7f020134
-			public const int avd_show_password_2 = 2130837812;
+			public const int avd_show_password_1 = 2130837812;
 			
 			// aapt resource value: 0x7f020135
-			public const int avd_show_password_3 = 2130837813;
+			public const int avd_show_password_2 = 2130837813;
+			
+			// aapt resource value: 0x7f020136
+			public const int avd_show_password_3 = 2130837814;
 			
 			// aapt resource value: 0x7f020056
 			public const int common_full_open_on_phone = 2130837590;
@@ -6301,11 +6302,11 @@ namespace WhereTo.Droid
 			// aapt resource value: 0x7f020126
 			public const int notification_icon_background = 2130837798;
 			
-			// aapt resource value: 0x7f02012e
-			public const int notification_template_icon_bg = 2130837806;
-			
 			// aapt resource value: 0x7f02012f
-			public const int notification_template_icon_low_bg = 2130837807;
+			public const int notification_template_icon_bg = 2130837807;
+			
+			// aapt resource value: 0x7f020130
+			public const int notification_template_icon_low_bg = 2130837808;
 			
 			// aapt resource value: 0x7f020127
 			public const int notification_tile_bg = 2130837799;
@@ -6314,19 +6315,22 @@ namespace WhereTo.Droid
 			public const int notify_panel_notification_icon_bg = 2130837800;
 			
 			// aapt resource value: 0x7f020129
-			public const int profile_generic = 2130837801;
+			public const int plugin_lc_smallicon = 2130837801;
 			
 			// aapt resource value: 0x7f02012a
-			public const int refresh = 2130837802;
+			public const int profile_generic = 2130837802;
 			
 			// aapt resource value: 0x7f02012b
-			public const int roundedbg = 2130837803;
+			public const int refresh = 2130837803;
 			
 			// aapt resource value: 0x7f02012c
-			public const int roundedbgdark = 2130837804;
+			public const int roundedbg = 2130837804;
 			
 			// aapt resource value: 0x7f02012d
-			public const int slideout = 2130837805;
+			public const int roundedbgdark = 2130837805;
+			
+			// aapt resource value: 0x7f02012e
+			public const int slideout = 2130837806;
 			
 			static Drawable()
 			{

@@ -26,9 +26,21 @@ namespace WhereTo.Views
 
             FacebookLoginCommand = new Command(FacebookLogin);
             GoogleLoginCommand = new Command(GoogleLogin);
-
+            TitterLoginCommand = new Command(TwitterLogin);
 
             InitializeComponent();
+        }
+
+        private async void TwitterLogin()
+        {
+
+            if (IsBusy) return;
+            IsBusy = true;
+
+            if (OAuthConfig.User == null)
+            {
+                await Navigation.PushModalAsync(new ProviderLoginPage("Twitter"));
+            }
         }
 
 
@@ -65,13 +77,14 @@ namespace WhereTo.Views
             {
                 await Navigation.PushModalAsync(new ProviderLoginPage("FaceBook"));
             }
-
-
+            
             await LoginSuccess();
         }
 
         public ICommand FacebookLoginCommand { get; }
 
         public ICommand GoogleLoginCommand { get; }
+
+        public ICommand TitterLoginCommand { get; }
     }
 }
