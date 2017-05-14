@@ -40,7 +40,7 @@ namespace WhereTo.Services
             var _item = items.FirstOrDefault(arg => arg.Id == item.Id);
             items.Remove(_item);
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url + item.Id);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url +"/"+ item.Id);
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "DELETE";
           
@@ -82,6 +82,18 @@ namespace WhereTo.Services
             items.Remove(_item);
             items.Add(item);
 
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url + "/"+ item.Id);
+            httpWebRequest.ContentType = "text/json";
+            httpWebRequest.Method = "PUT";
+            var data = JsonConvert.SerializeObject(item);
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            Console.WriteLine(httpResponse.StatusCode);
             return await Task.FromResult(true);
         }
     }

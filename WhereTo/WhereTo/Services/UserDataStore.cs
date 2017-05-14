@@ -86,6 +86,19 @@ namespace WhereTo.Services
             items.Remove(_item);
             items.Add(_user);
 
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url + "/" + _user.Id);
+            httpWebRequest.ContentType = "text/json";
+            httpWebRequest.Method = "PUT";
+            var data = JsonConvert.SerializeObject(_user);
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            Console.WriteLine(httpResponse.StatusCode);
+
             return await Task.FromResult(true);
         }
     }
