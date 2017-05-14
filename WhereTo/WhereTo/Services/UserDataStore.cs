@@ -26,14 +26,16 @@ namespace WhereTo.Services
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(_url);
             httpWebRequest.ContentType = "text/json";
             httpWebRequest.Method = "POST";
+            httpWebRequest.Accept = "application/json;";
             Console.WriteLine(httpWebRequest.RequestUri);
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 streamWriter.Write(data);
                 streamWriter.Flush();
             }
-            
+
             var httpResponse = httpWebRequest.GetResponse();
+            
             Match m = Regex.Match(httpResponse.ToString(), "reasonPhrase\":\"\\d+");
             var split = m.ToString().Split('"');
             int index = Convert.ToInt32(split[2]);
