@@ -9,6 +9,7 @@ using WhereTo.Models;
 using Newtonsoft.Json;
 using System.Linq;
 using Xamarin.Forms;
+using System.Text.RegularExpressions;
 
 [assembly: Dependency(typeof(WhereTo.Services.UserDataStore))]
 namespace WhereTo.Services
@@ -31,17 +32,14 @@ namespace WhereTo.Services
                 streamWriter.Write(data);
                 streamWriter.Flush();
             }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            Console.WriteLine(httpResponse.StatusCode);
-            WebHeaderCollection header = httpResponse.Headers;
+            
+            var httpResponse = httpWebRequest.GetResponse();
+            Match m = Regex.Match(httpResponse.ToString(), "reasonPhrase\":\"\\d+");
+            var split = m.ToString().Split('"');
+            int index = Convert.ToInt32(split[2]);
 
-            var encoding = ASCIIEncoding.ASCII;
-            using (var reader = new System.IO.StreamReader(httpResponse.GetResponseStream(), encoding))
-            {
-                string responseText = reader.ReadToEnd();
-                Console.WriteLine(responseText);
-            }
-            return await Task.FromResult(-1);
+            Console.WriteLine("INDEX: "+index);
+            return await Task.FromResult(index);
         }
 
         public async Task<bool> DeleteItemAsync(User _user)
